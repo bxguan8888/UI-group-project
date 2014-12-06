@@ -22,7 +22,14 @@ function BestSellerListNames()
 function BestSellerListsOverview(date)
 {
 	// optional date field 
-	var url = "http://api.nytimes.com/svc/books/v3/lists/overview.jsonp?callback=books&api-key="+Book_api;
+	var url = "";
+
+	if(date==null){ // may need to be changed to "==''" later
+		url = "http://api.nytimes.com/svc/books/v3/lists/overview.jsonp?callback=books&api-key="+Book_api;
+	}
+	else{
+		url = "http://api.nytimes.com/svc/books/v3/lists/overview.jsonp?callback=books&published_date="+date+"&api-key="+Book_api;
+	}
 
 	$.ajax({
 		'url': url,
@@ -43,8 +50,10 @@ function InitialPage()
 	// for the initial page.
 
 	// Not working yet!!!!!!!!!!!!!! //
-	BestsellerListNames();
-	BestSellerListsOverview();
+	var date;
+
+	BestSellerListNames();
+	BestSellerListsOverview(date);
 
 }
 
@@ -120,7 +129,37 @@ function SearchArticle(review_data)
 		'method': 'GET',
 		'cache': true,
 		'dataType': 'json',
-		// 'jsonpCallback': 'svc_search_v2_articlesearch',
+		'success': function(data, textStats, XMLHttpRequest){
+			console.log(data);
+		}
+	});
+}
+
+function BestSellerHistory(book_name)
+{
+	// This function is used to retrieve history ranking of certain book
+	// var book_name1 = book_name;
+
+	// var encode_bookname = book_name.split(' ');
+	// var len = encode_bookname.length;
+	// var bookname = "";
+
+	// for (var i=0; i<len; i++){
+	// 	bookname = bookname + "+" + encode_bookname[i];
+	// }
+
+	// var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?callback=books&title=THE+GOLDFINCH&api-key="+Book_api;
+
+	var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?title=THE+GOLDFINCH&api-key="+Book_api;
+	// For test
+	// Caution about the format of the book title passed in
+
+	$.ajax({
+		'url': url,
+		'method': 'GET',
+		// 'jsonpCallback' : 'books',
+		'cache': true,
+		'dataType': 'json',
 		'success': function(data, textStats, XMLHttpRequest){
 			console.log(data);
 		}
