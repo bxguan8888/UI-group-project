@@ -2,20 +2,23 @@ var Book_api = "22167e35f2cd71ee36835bba032fee38:1:70162819";
 
 function BestSellerListNames()
 {
-
-	var url = "http://api.nytimes.com/svc/books/v3/lists/names.jsonp?callback=books&api-key="+Book_api;
-
-	$.ajax({
-		'url': url,
-		'method': 'GET',
-		'jsonpCallback' : 'books',
-		'cache': true,
-		'dataType': 'jsonp',
-		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
-			
-		}
-	});
+	setTimeout(function () {
+		var url = "http://api.nytimes.com/svc/books/v3/lists/names.jsonp?callback=books&api-key="+Book_api;
+	
+		$.ajax({
+			'url': url,
+			'method': 'GET',
+			'jsonpCallback' : 'books',
+			'cache': true,
+			'dataType': 'jsonp',
+			'success': function(data, textStats, XMLHttpRequest){
+				console.log(data);
+	
+				items.set('list_name', data);
+				
+			}
+		});
+	},1000);
 
 }
 
@@ -150,19 +153,37 @@ function BestSellerHistory(book_name)
 
 	// var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?callback=books&title=THE+GOLDFINCH&api-key="+Book_api;
 
-	var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?title=THE+GOLDFINCH&api-key="+Book_api;
+	var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.jsonp?title=THE+GOLDFINCH&api-key="+Book_api;
 	// For test
 	// Caution about the format of the book title passed in
+
+	var callback = function(res){
+		console.log(res);
+	}
 
 	$.ajax({
 		'url': url,
 		'method': 'GET',
 		// 'jsonpCallback' : 'books',
 		'cache': true,
-		'dataType': 'json',
-		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
-		}
+		'dataType': 'jsonp',
+		'success': callback
 	});
+}
+
+function init() {
+	if (!store.enabled) {
+		alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
+		return
+	}
+	else{
+		alert('store.js is enabled!')
+		return
+	}
+
+	var items = new Store('list_name');
+
+	items.set('list_name', 24);
+
 }
 
