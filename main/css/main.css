@@ -12,7 +12,7 @@
 	padding: 10px;
 }
 
-.book_pro:hover img{
+.book_pro:hover a img{
 	transform: scale(1.05);
 }
 
@@ -22,3 +22,10 @@
 	color: #fff;
 }
 
+.favo-icon{
+	background-image: url(../images/bookmark-before.png);
+	background-size: 15px 20px;
+	height: 20px;
+	width: 15px;
+	cursor: pointer;
+}
