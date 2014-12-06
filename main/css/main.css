@@ -1,0 +1,17 @@
+.fake-sidebar {
+    height: 50px;
+}
+
+#page-content-wrapper {
+	background-color: rbg(240, 240, 240);
+}
+
+.book_pro {
+	background-color: rbg(255, 255, 255);
+	text-align: center;
+	padding: 10px;
+}
+
+.book_pro:hover img{
+	transform: scale(1.05);
+}
