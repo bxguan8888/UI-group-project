@@ -4,6 +4,7 @@
   <link href="bootstrap.min.css" rel="stylesheet">
   <script src="jquery-2.1.1.min.js"></script>
   <script src="jll_index.js"></script>
+  <script src="store.min.js"></script>
 </head>
 <body>
   <div class="container" id="container1">
@@ -20,11 +21,28 @@
 
       <div class="">
         <div class="row" id="SearchBtn">
-          <a href="#" class="btn btn-primary" onclick="BestSellerHistory()">Search</a>
+          <a href="#" class="btn btn-primary" onclick="init()">Search</a>
         </div>
       </div>
     </div>
   </div>
+
+<script>
+    // init()
+    // function init() {
+    //     if (!store.enabled) {
+    //         alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
+    //         return
+    //     }
+    //     else{
+    //       alert('store.js is enabled!')
+    //       return
+    //     }
+
+    //     var items = new Store('list_name');
+
+    // }
+</script>
 
 </body>
 </html>
