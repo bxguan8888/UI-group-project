@@ -11,11 +11,15 @@ function BestSellerListNames()
 		'cache': true,
 		'dataType': 'jsonp',
 		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
 			resultArr = data.results;
 			for(i=0;i<resultArr.length; i++){
 				listName = resultArr[i].display_name;
-				console.log(listName);
+				splitArr = listName.split("&");
+				if(splitArr.length==2){
+					$('#category').append("<li><a href=\"#\">"+splitArr[0]+"</br>&nbsp&nbsp&nbsp&nbsp&nbsp&amp"+splitArr[1]+"</a></li>");
+				}else{
+					$('#category').append("<li><a href=\"#\">"+listName+"</a></li>");
+				}
 			}
 		}
 	});
