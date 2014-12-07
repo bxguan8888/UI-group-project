@@ -14,7 +14,10 @@ function BestSellerListNames()
 			'success': function(data, textStats, XMLHttpRequest){
 				console.log(data);
 	
-				items.set('list_name', data);
+				store.set('list_name', data);
+				var name = store.get('list_name');
+
+				console.log(name);
 				
 			}
 		});
@@ -52,8 +55,9 @@ function InitialPage()
 	// This function is used to call BestsellerListNames and BestSellerListsOverview
 	// for the initial page.
 
-	// Not working yet!!!!!!!!!!!!!! //
-	var date;
+	
+	var date; // Extract from the html element and store in store.js for later use
+	store.set('published_date', date);
 
 	BestSellerListNames();
 	BestSellerListsOverview(date);
@@ -72,6 +76,17 @@ function GetBestSellerList(list_Name)
 
 	var bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/combined-print-and-e-book-fiction.jsonp?api-key="+Book_api;
 	// This one is only for testing
+
+	var date = store.get('published_date');
+
+	// var date = "2014-05-06";
+
+	if(date==null){
+		bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/combined-print-and-e-book-fiction.jsonp?api-key="+Book_api;
+	}
+	else{
+		bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/"+date+"/combined-print-and-e-book-fiction.jsonp?api-key="+Book_api;
+	}
 
 	$.ajax({
 		'url': bestSeller_List,
@@ -164,26 +179,30 @@ function BestSellerHistory(book_name)
 	$.ajax({
 		'url': url,
 		'method': 'GET',
-		// 'jsonpCallback' : 'books',
+		'jsonpCallback' : 'books',
 		'cache': true,
 		'dataType': 'jsonp',
 		'success': callback
 	});
 }
 
+// init()
 function init() {
 	if (!store.enabled) {
 		alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
 		return
 	}
-	else{
-		alert('store.js is enabled!')
-		return
-	}
+	// else{
+	// 	alert('store.js is enabled!')
+	// 	return
+	// }
 
-	var items = new Store('list_name');
+	// var items = new Store('list_name');
 
-	items.set('list_name', 24);
+	store.set('list_name', 24);
+
+	var name = store.get('list_name');
+	console.log(name);
 
 }
 
