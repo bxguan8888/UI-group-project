@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Main Page</title>
+    <title>Individual Book</title>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -81,56 +81,28 @@
             <div class="fake-sidebar">
             </div>
 
-            <div class="container-fluid">
-                        <!-- <h1>Simple Sidebar</h1> -->
-                        <!-- <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
-                        
+            <div class="container-fluid">                        
                 <div class="book-content">
                     <div class="row" id="update">
-                        <div class="col-sm-4">
-                            <div class="thumbnail book_pro" style="float:left">
-                                <a target="#" href="" id="">
-                                    <img id="book-img" src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px">
-                                </a>
-                                <div>
-                                <h4 id="book-title" class="book-title">HOPE TO DIE</h4>
-                                <h5 id="book-rank-now" class="book-desc">Current Rank:  1</h5>
-                                <h5 id="book-rank-last" class="book-desc">Last Week: -</h5>
-                                </div>
-                                <div class="add-favo">
-                                    <div class="favo-icon" id="favo_icon1" onClick="add_favo(1)" title="favorite" style="margin:6px;"></div>
-                                    <p id="add" style="display:inline;float:left;margin-top:6px;color:#ad6f59">Add to My Shelf</p>
-                                </div>
-                            </div>
+                        <div class="col-sm-5">
+                            <a target="#" href="" id="">
+                                <img id="book-img" src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px" width="90%">
+                            </a>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="thumbnail book_pro" style="float:left">
-                                <a target="#" href="" id="">
-                                    <img src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="">  
-                                    <h3 id="">book name</h3>
-                                </a>
-                                <div class="add-favo">
-                                    <div class="favo-icon" id="favo_icon2" onClick="add_favo(2)" title="favorite"></div>
-                                </div>
+                            <div class="col-sm-7">
+                            <h4 id="book-title" class="book-title">HOPE TO DIE</h4>
+                            <h5 id="book-rank-now" class="book-desc">Current Rank:  1</h5>
+                            <h5 id="book-rank-last" class="book-desc">Last Week: -</h5>
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="thumbnail book_pro" style="float:left">
-                                <a target="#" href="" id="">
-                                    <img src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="">  
-                                    <h3 id="">book name</h3>
-                                </a>
-                                <div>
-                                    <div class="favo-icon" id="favo_icon3" onClick="add_favo(3)" title="favorite"></div>
-                                </div>
+                            <div class="add-favo">
+                                <div class="favo-icon" id="favo_icon1" onClick="add_favo(1)" title="favorite" style="margin:6px;"></div>
+                                <p id="add" style="display:inline;float:left;margin-top:6px;color:#ad6f59">Add to My Shelf</p>
                             </div>
                         </div>
                     </div>           
-
                 </div>
             </div>
+
         </div>
         <!-- /#page-content-wrapper -->
 
