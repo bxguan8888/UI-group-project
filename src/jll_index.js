@@ -1,3 +1,5 @@
+var Books=[];
+
 var Book_api = "22167e35f2cd71ee36835bba032fee38:1:70162819";
 
 function BestSellerListNames()
@@ -64,7 +66,7 @@ function InitialPage()
 
 }
 
-function GetBestSellerList(list_Name)
+function GetBestSellerList(list_Name, sort_by, sort_order)
 { 
 	//The function to get top 20 books for each category, can add optional publish-
 	//date field
@@ -81,11 +83,27 @@ function GetBestSellerList(list_Name)
 
 	// var date = "2014-05-06";
 
-	if(date==null){
-		bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/combined-print-and-e-book-fiction.jsonp?api-key="+Book_api;
+	if(date!=null){
+		bestSeller_List =bestSeller_List + date+"/";
 	}
-	else{
-		bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/"+date+"/combined-print-and-e-book-fiction.jsonp?api-key="+Book_api;
+
+	bestSeller_List=bestSeller_List+list_Name+".jsonp?";
+
+	if(sort_by!=null){
+		if(sort_order!=null){
+			bestSeller_List=bestSeller_List+"sort-by="+sort_by+ "&sort-order=" + sort_order;
+		}else{
+			bestSeller_List=bestSeller_List+"sort-by="+sort_by;
+		}
+
+		bestSeller_List=bestSeller_List+"&api-key="+Book_api;
+
+	}else{
+		if(sort_order!=null){
+			bestSeller_List=bestSeller_List+"sort-order=" + sort_order+"&api-key="+Book_api;
+		}else{
+			bestSeller_List=bestSeller_List+"api-key="+Book_api;
+		}
 	}
 
 	$.ajax({
@@ -97,6 +115,35 @@ function GetBestSellerList(list_Name)
 		'dataType': 'jsonp',
 		'success': function(data, textStats, XMLHttpRequest){
 			console.log(data);
+
+			Books=[];
+			var i=0;
+			var resultTemp=data["results"];
+			var booksTemp=data["results"]["books"];
+			for(i=0; i<booksTemp.length;i++){
+				var bookTemp= booksTemp[i];
+				var book={
+					"list_name":resultTemp["list_name"],
+					"bestsellers_date":resultTemp["bestsellers_date"],
+					"published_date": resultTemp["published_date"],
+					"rank": bookTemp['rank'],
+					"rank_last_week":bookTemp['rank_last_week'],
+					"weeks_on_list":bookTemp['weeks_on_list'],
+					"primary_isbn13":bookTemp['primary_isbn13'],
+					"publisher":bookTemp['publisher'],
+					"author": bookTemp['author'],
+					"contributor": bookTemp['contributor'],
+					"description": bookTemp['description'],
+					"publisher": bookTemp['publisher'],
+					"title": bookTemp['title'],
+					"book_image": bookTemp['book_image'],
+					"amazon_product_url":bookTemp['amazon_product_url'],
+					"isFavorate": false
+				}
+				// TODO: modify isFavorate according to store.js
+				Books.push(book);
+			}
+			console.log(Books);
 		}
 	}); 
 }
