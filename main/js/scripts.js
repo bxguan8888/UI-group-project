@@ -18,11 +18,11 @@ function add_favo(arg){
 	}
 	if(added_arr[arg-1]) {
 		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
-		document.getElementById('add').innerHTML="Add to My shelf";
+		document.getElementById('add'+arg).innerHTML="Add to My shelf";
 		added_arr[arg-1] = false;
 	}else{
 		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
-		document.getElementById('add').innerHTML="Remove from shelf";
+		document.getElementById('add'+arg).innerHTML="Remove from shelf";
 		added_arr[arg-1] = true;
 	}
 }

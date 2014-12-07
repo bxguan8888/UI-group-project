@@ -1,5 +1,5 @@
 .fake-sidebar {
-    height: 50px;
+    height: 60px;
 }
 
 #page-content-wrapper {
@@ -40,4 +40,13 @@
 .book-desc{
 	margin: 3px;
 	color:gray;
+}
+.book-category{
+	font-size: 10px;
+	margin: 3px;
+	color:gray;
+}
+
+.add-favo{
+	margin-top: 30px;
 }
