@@ -47,11 +47,11 @@
                     Sort By
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Published Date</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ISBN</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Current Rank</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Last-Week Rank</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Weeks on List</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#">Published Date</a></li>
+                        <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#">ISBN</a></li>
+                        <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#">Current Rank</a></li>
+                        <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#">Last-Week Rank</a></li>
+                        <li id="weeks" role="presentation"><a role="menuitem" tabindex="-1" href="#">Weeks on List</a></li>
                       </ul>
                     </li>
 
@@ -92,12 +92,12 @@
                         <div class="col-sm-4">
                             <div class="thumbnail book_pro" style="float:left">
                                 <a target="#" href="" id="">
-                                    <img src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px">
+                                    <img id="book-img" src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px">
                                 </a>
                                 <div>
-                                <h4 class="book-title">HOPE TO DIE</h4>
-                                <h5 class="book-desc">Current Rank:  1</h5>
-                                <h5 class="book-desc">Last Week: -</h5>
+                                <h4 id="book-title" class="book-title">HOPE TO DIE</h4>
+                                <h5 id="book-rank-now" class="book-desc">Current Rank:  1</h5>
+                                <h5 id="book-rank-last" class="book-desc">Last Week: -</h5>
                                 </div>
                                 <div class="add-favo">
                                     <div class="favo-icon" id="favo_icon1" onClick="add_favo(1)" title="favorite" style="margin:6px;"></div>
