@@ -28,4 +28,16 @@
 	height: 20px;
 	width: 15px;
 	cursor: pointer;
+	display: inline; 
+	float: left;
+}
+
+.book-title{
+	margin: 6px;
+	color:#444;
+}
+
+.book-desc{
+	margin: 3px;
+	color:gray;
 }

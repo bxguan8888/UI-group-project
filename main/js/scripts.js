@@ -4,7 +4,7 @@ $(document).ready(function() {
   });
 });
 
-
+var added_arr = [];
 function add_favo(arg){
 	var ele;
 	ele = "favo_icon" + arg;
@@ -13,5 +13,16 @@ function add_favo(arg){
 	//if added then remove from favorite
 	//if not add to favorite
 
-	document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+	if(added_arr.length<=arg-1){
+		added_arr[arg-1]=false;
+	}
+	if(added_arr[arg-1]) {
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+		document.getElementById('add').innerHTML="Add to My shelf";
+		added_arr[arg-1] = false;
+	}else{
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+		document.getElementById('add').innerHTML="Remove from shelf";
+		added_arr[arg-1] = true;
+	}
 }
