@@ -30,14 +30,14 @@ $( document ).ready(function() {
 function individualDetail(bookObject){
 	$("#detailImg").empty();
 	$("#detailImg").append("<img src=\""+bookObject.bookimage+"\" style=\"display:inline; margin:6px\" width=\"90%\">");
-	// $("#detail-title").empty();
-	// $("#detail-title").append(bookObject.bookname);
-	// $("#detail-author").empty();
-	// $("#detail-author").append(bookObject.bookauthor);
-	// $("#detail-desc").empty();
-	// $("#detail-desc").append(bookObject.bookdesc);
-	// $("#detail-publisher").empty();
-	// $("#detail-publisher").append(bookObject.bookpublisher);
+	$("#detail-title").empty();
+	$("#detail-title").append(bookObject.bookname);
+	$("#detail-author").empty();
+	$("#detail-author").append(bookObject.bookauthor);
+	$("#detail-desc").empty();
+	$("#detail-desc").append(bookObject.bookdesc);
+	$("#detail-publisher").empty();
+	$("#detail-publisher").append(bookObject.bookpublisher);
 	// $("#detail-isbn").empty();
 	// $("#detail-isbn").append(bookObject.bookisbn);
 	// $("#buy").empty();
