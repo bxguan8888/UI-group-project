@@ -7,10 +7,10 @@ var currentSortMethod = null;
 // BestSellerListsOverview( "2014-11-29");
 // BestSellerListNames()
 // GetBestSellerList("combined-print-and-e-book-fiction");
+
 function BestSellerListNames()
 {
-	console.log("Category JS!!");
-	// setTimeout(function () {
+	setTimeout(function () {
 	var url = "http://api.nytimes.com/svc/books/v3/lists/names.jsonp?callback=books&api-key="+Book_api;
 
 	$.ajax({
@@ -26,14 +26,14 @@ function BestSellerListNames()
 				listName = resultArr[i].display_name;
 				splitArr = listName.split("&");
 				if(splitArr.length==2){
-					$('#category').append("<li><a href=\"#\" onclick=\"GetBestSellerList(\'"+resultArr[i]["list_name_encoded"]+"\')\" >"+splitArr[0]+"</br>&nbsp&nbsp&nbsp&nbsp&nbsp&amp"+splitArr[1]+"</a></li>");
+					$('#category').append("<li><a href=\"#\" onclick=\"GetBestSellerList(\'"+resultArr[i].list_name_encoded+"\')\" >"+splitArr[0]+"</br>&nbsp&nbsp&nbsp&nbsp&nbsp&amp"+splitArr[1]+"</a></li>");
 				}else{
-					$('#category').append("<li><a href=\"#\" onclick=\"GetBestSellerList(\'"+resultArr[i]["list_name_encoded"]+"\')\" >"+listName+"</a></li>");
+					$('#category').append("<li><a href=\"#\" onclick=\"GetBestSellerList(\'"+resultArr[i].list_name_encoded+"\')\" >"+listName+"</a></li>");
 				}
 			}
 		}
 	});
-	// }, 1000);
+	 }, 500);
 }
 
 function BestSellerListsOverview(date)
@@ -58,10 +58,10 @@ function BestSellerListsOverview(date)
 			console.log(data)
 			Books=[];
 			var i=0;
-			var resultTemp=data["results"];
-			var listsTemp=data["results"]["lists"];
+			var resultTemp=data.results;
+			var listsTemp=resultTemp.lists;
 			for(i=0; i<listsTemp.length;i++){
-				var bookTemp= listsTemp[i]["books"][0];
+				var bookTemp= listsTemp[i].books[0];
 				var book={
 					"list_name":listsTemp[i]["list_name"],
 					"bestsellers_date":resultTemp["bestsellers_date"],
@@ -83,11 +83,31 @@ function BestSellerListsOverview(date)
 				// TODO: modify isFavorate according to store.js
 				Books.push(book);
 			}
-			// console.log(Books);
-
-
-
-
+			console.log(Books);
+			$('#update').empty();
+			$('#ListNameOnPage').empty();
+			$('#ListDescOnPage').empty();
+			for(i=0;i<Books.length;i++){
+				var book=Books[i];
+				if((i+1)%4==0){
+					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
+				}else{
+					var addedHtml="<div class=\"col-sm-3\">";		
+					}	
+					var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
+					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"#\" href=\"\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+                addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
+                if(book['rank_last_week']!=0){
+                	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
+                }else{
+                	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
+                }                           
+				// addedHtml=addedHtml+ "</div></div>";
+				// TODO:add addFavo function
+				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				$('#update').append(addedHtml);
+			}
 		}
 	});
 }
@@ -98,8 +118,9 @@ function InitialPage()
 	// for the initial page.
 
 	// Not working yet!!!!!!!!!!!!!! //
-	
-	var date;
+	$("#dropdownSort").css("visibility","hidden");
+
+	var date=null;
 
 	BestSellerListNames();
 	BestSellerListsOverview(date);
@@ -115,7 +136,7 @@ function GetBestSellerList(list_Name)
 	// var bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/"+list_Name+".jsonp?api-key="+Book_api;
 	// Caution: must use the encoded list name, i.e use '-' to replace the space, the list-
 	// name returned has this field.
-	
+	$("#dropdownSort").css("visibility","visible");
 	sort_by = currentSortMethod;
 	currentCategory = list_Name;
 
@@ -172,17 +193,26 @@ function GetBestSellerList(list_Name)
 				Books.push(book);
 			}
 			console.log(Books);
+			$('#ListNameOnPage').empty();
+			$('#ListNameOnPage').append(book.list_name);
+			$('#ListDescOnPage').empty();
+			$('#ListDescOnPage').append("Updated on "+book.published_date);
 			$('#update').empty();
 			for(i=0;i<Books.length;i++){
-				var book=Books[i];			
-				var addedHtml="<div class=\"col-sm-4\"><div class=\"thumbnail book_pro\" style=\"float:left\"><a target=\"#\" href=\"\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; margin:6px\"> ";
-                addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\">"+book["list_name"]+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
+				var book=Books[i];
+				if((i+1)%4==0){
+					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
+				}else{
+					var addedHtml="<div class=\"col-sm-3\">";		
+					}	
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"#\" href=\"\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+                addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
                 }else{
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
                 }                           
-				addedHtml=addedHtml+ "</div></div>";
+				// addedHtml=addedHtml+ "</div></div>";
 				// TODO:add addFavo function
 				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
 				$('#update').append(addedHtml);
@@ -191,6 +221,26 @@ function GetBestSellerList(list_Name)
 		}
 	}); 
 }
+
+
+function sortlist(sortorder){
+	$("#dropdownSort").empty();
+	if (sortorder==null){
+		var sortword = "Sort By";
+	}else{
+		var sortword = "Sorted by: "+sortorder.replace(/-/g, " ").toUpperCase();
+	}
+	$("#dropdownSort").append(sortword);
+	currentSortMethod=sortorder;
+	GetBestSellerList(currentCategory);
+}
+
+// function overviewTolist(not_coded_listname){
+// 	lower_case = not_coded_listname.toLowerCase();
+// 	encoded_listname=lower_case.replace(/ /g, "-");
+// 	GetBestSellerList(encoded_listname);
+// }
+
 
 function SearchBookReview(data)
 {

@@ -13,7 +13,12 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.js"></script>
-    <script src="js/category.js"></script>
+    <script src="js/gbx_index.js"></script>
+    <script src="js/store.min.js"></script>
+
+    <!--For making charts-->
+    <script src="js/jquery.flot.js"></script>
+
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,7 +41,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background: #444;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand">BookShelf</a>
+                  <div class="navbar-brand"><img src="images/mainpage-logo.png" style="display:inline;position:relative;top:-18px;left:-18px"></div>
                 </div>
                 <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-right">
@@ -47,17 +52,18 @@
                     Sort By
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#">Published Date</a></li>
-                        <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#">ISBN</a></li>
-                        <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#">Current Rank</a></li>
-                        <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#">Last-Week Rank</a></li>
-                        <li id="weeks" role="presentation"><a role="menuitem" tabindex="-1" href="#">Weeks on List</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist(null)">Default</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('published-date')">Published Date</a></li>
+                        <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('isbn')">ISBN</a></li>
+                        <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank')">Current Rank</a></li>
+                        <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank-last-week')">Last-Week Rank</a></li>
+                        <li id="weeks" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('weeks-on-list')">Weeks on List</a></li>
                       </ul>
                     </li>
 
 
                     <li><a href="#">My Shelf</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="index.html">Home</a></li>
                   </ul>
                 </div>
             </div>
@@ -71,6 +77,7 @@
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                 <h3 style="display:inline">Categories</h3>
                 </div>
+                <li><a href="#" onclick="BestSellerListsOverview(null)">Lists Overview</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -84,20 +91,43 @@
             <div class="container-fluid">                        
                 <div class="book-content">
                     <div class="row" id="update">
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                             <img id="book-img" src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px" width="90%">
                         </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-8">
                             <h1 id="detail-title" class="detail-title">HOPE TO DIE</h2>
                             <h4 id="detail-author" class="detail-subtit">by James Patterson</h3>
                             <blockquote>
                                 <p>Detective Alex Cross 2019s family is kidnapped by a madman who wants to turn Cross into a perfect killer.</p>
                                 <footer>Published by <cite title="Source Title">Little, Brown</cite></footer>
                             </blockquote>
+                            <div class="trends">
+                                <div>
+                                    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+                                    <h4 style="display:inline;">Trends</h4>
+                                </div>
+                                <div id="placeholder" style="width:160px;height:80px;"></div>
+                                <div>
+                                <p style="margin:6px 0 -2px 10px;">Current Rank: 1</p>
+                                <p style="margin:6px 0 6px 10px;">Last Week: 5</p>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $.plot($("#placeholder"), [ {color: "rgb(0,0,255)" ,data: [[1, 13], [2, 5], [3, 2], [4, 6], [5, 1]]} ], { xaxis: { max: 5 },yaxis: { max: 15 } });
+                            </script>
+
 
                             <div class="add-favo">
                                 <div class="favo-icon" id="favo_icon1" onClick="add_favo(1)" title="favorite" style="margin:6px;"></div>
-                                <p id="add" style="display:inline;float:left;margin-top:6px;color:#ad6f59">Add to My Shelf</p>
+                                <p id="add1" style="display:inline;float:left;margin-top:6px;color:#ad6f59">Add to My Shelf</p>
+                            </div>
+
+                            </br></br></br>
+                            <div class="buy">
+                            <p class="detail-subtit">ISBN: 9780316210942</p>
+                            <a href="#">
+                            <img src="images/Amazon-Logo.jpg" width="14%">
+                            </a>
                             </div>
                         </div>
                     </div>           

@@ -32,12 +32,12 @@
 
 </head>
 
-<body onload="BestSellerListNames()">
+<body onload="InitialPage()">
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background: #444;">
             <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand">BookShelf</a>
+                  <div class="navbar-brand"><img src="images/mainpage-logo.png" style="display:inline;position:relative;top:-18px;left:-18px"></div>
                 </div>
                 <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav navbar-right">
@@ -48,17 +48,18 @@
                     Sort By
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#">Published Date</a></li>
-                        <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#">ISBN</a></li>
-                        <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#">Current Rank</a></li>
-                        <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#">Last-Week Rank</a></li>
-                        <li id="weeks" role="presentation"><a role="menuitem" tabindex="-1" href="#">Weeks on List</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist(null)">Default</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('published-date')">Published Date</a></li>
+                        <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('isbn')">ISBN</a></li>
+                        <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank')">Current Rank</a></li>
+                        <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank-last-week')">Last-Week Rank</a></li>
+                        <li id="weeks" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('weeks-on-list')">Weeks on List</a></li>
                       </ul>
                     </li>
 
 
                     <li><a href="#">My Shelf</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="index.html">Home</a></li>
                   </ul>
                 </div>
             </div>
@@ -72,6 +73,7 @@
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                 <h3 style="display:inline">Categories</h3>
                 </div>
+                <li><a href="#" onclick="BestSellerListsOverview(null)">Lists Overview</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -81,15 +83,18 @@
 
             <div class="fake-sidebar">
             </div>
-
+            <header style="margin:40px;">
+                <h2 id="ListNameOnPage" style="color:#525252"></h2>
+                <p id="ListDescOnPage" style="color:#909090;margin-left:4px"></p>
+            </header>
             <div class="container-fluid">
                         <!-- <h1>Simple Sidebar</h1> -->
                         <!-- <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
                         <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a> -->
                         
-                <div class="book-content">
-                    <div class="row" id="update">
+                <div class="book-content" id="update">
+                    <!-- <div class="row">
                         <div class="col-sm-3">
                             <div class="thumbnail book_pro" style="float:left">
                                 <a target="#" href="" id="">
@@ -162,7 +167,7 @@
                             </div>
                         </div>
 
-                    </div>           
+                    </div>  -->          
 
                 </div>
             </div>
