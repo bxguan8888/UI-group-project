@@ -16,6 +16,12 @@
 	transform: scale(1.05);
 }
 
+.book_pro a img{
+	display: table;
+	height: 200px;
+	width: auto;
+}
+
 .sideHeading {
 	margin-left: 20px;
 	margin-bottom: 20px;
