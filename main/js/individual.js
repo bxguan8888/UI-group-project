@@ -33,13 +33,13 @@ function individualDetail(bookObject){
 	$("#detail-title").empty();
 	$("#detail-title").append(bookObject.bookname);
 	$("#detail-author").empty();
-	$("#detail-author").append(bookObject.bookauthor);
+	$("#detail-author").append("by "+bookObject.bookauthor);
 	$("#detail-desc").empty();
 	$("#detail-desc").append(bookObject.bookdesc);
 	$("#detail-publisher").empty();
 	$("#detail-publisher").append(bookObject.bookpublisher);
-	// $("#detail-isbn").empty();
-	// $("#detail-isbn").append(bookObject.bookisbn);
-	// $("#buy").empty();
-	// $("#buy").append(bookObject.bookamazon);
+	$("#detail-isbn").empty();
+	$("#detail-isbn").append("ISBN: "+bookObject.bookisbn);
+	$("#buy").empty();
+	$("#buy").append("<a href=\""+bookObject.bookamazon+"\" target=_blank><img src=\"images/Amazon-Logo.jpg\" width=\"14%\">");
 }
