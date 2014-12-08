@@ -96,7 +96,7 @@ function BestSellerListsOverview(date)
 					}	
 					var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
 					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"#\" href=\"\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -205,7 +205,7 @@ function GetBestSellerList(list_Name)
 				}else{
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}	
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"#\" href=\"\" id=\"\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" id=\"\" onclick=\"individualDetail("+book+")\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -233,6 +233,35 @@ function sortlist(sortorder){
 	$("#dropdownSort").append(sortword);
 	currentSortMethod=sortorder;
 	GetBestSellerList(currentCategory);
+}
+
+function individualDetail(bookObject){
+	var imgUpdate = "<img src=\""+bookObject.book_image+"\" style=\"display:inline;margin:6px\" width=\"90%\"";
+	$("#detailImg").empty();
+	$("#detailImg").append(imgUpdate);
+	var titleUpdate = bookObject['title'];
+	$("#detail-title").empty();
+	$("#detail-title").append(titleUpdate);
+	var authorUpdate = bookObject.author;
+	$("#detail-author").empty();
+	$("#detail-author").append(authorUpdate);
+	var descUpdate = bookObject['description'];
+	$("#detail-desc").empty();
+	$("#detail-desc").append(descUpdate);
+	var publisherUpdt = bookObject.publisher;
+	$("#detail-publisher").empty();
+	$("#detail-publisher").append(publisherUpdt);
+	var IsbnUpdate = "ISBN: "+book.primary_isbn13;
+	$("#detail-isbn").empty();
+	$("#detail-isbn").append(IsbnUpdate);
+	var amazonlink = "";
+	splitLink = bookObject.amazon_product_url.split("\\");
+	for (i=0;i<splitLink.length;i++){
+		amazonlink += splitLink[i];
+	}
+	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.jpg\" width=\"14%\"></a>";
+	$("#buy").empty();
+	$("#buy").append(amazonLinkUpdt);
 }
 
 // function overviewTolist(not_coded_listname){

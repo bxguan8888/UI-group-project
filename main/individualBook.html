@@ -47,7 +47,7 @@
                   <ul class="nav navbar-nav navbar-right">
                     <!-- <li><a href="#">Sort By</a></li> -->
 
-                    <li class="dropdown" style="display:inline; float:left;">
+                    <li class="dropdown" style="display:inline; float:left; visibility:hidden;">
                     <a id="dropdownSort" data-toggle="dropdown" aria-expanded="true" style="cursor:pointer;">
                     Sort By
                     </a>
@@ -91,40 +91,42 @@
             <div class="container-fluid">                        
                 <div class="book-content">
                     <div class="row" id="update">
-                        <div class="col-sm-4">
-                            <img id="book-img" src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" alt="" style="display:inline; margin:6px" width="90%">
+                        <div class="col-sm-4" id="detailImg">
+                            <img src="http://du.ec2.nytimes.com.s3.amazonaws.com/prd/books/9780316210942.jpeg" style="display:inline; margin:6px" width="90%">
                         </div>
-                            <div class="col-sm-8">
-                            <h1 id="detail-title" class="detail-title">HOPE TO DIE</h2>
-                            <h4 id="detail-author" class="detail-subtit">by James Patterson</h3>
+                            <div class="col-sm-8" id="detailInfo">
+                            <div>
+                                <h1 id="detail-title" class="detail-title">HOPE TO DIE</h1>
+                                <h4 id="detail-author" class="detail-subtit">by James Patterson</h4>
+                            </div>
+                            <div class="add-favo" style="margin-top:-1px">
+                                <div class="favo-icon" id="favo_icon1" onclick="add_favo(1)" title="favorite"></div>
+                                <p id="add1" style="display:inline;float:left;margin-left:6px;color:#ad6f59">Add to My Shelf</p>
+                            </div>
+                            </br></br>
                             <blockquote>
-                                <p>Detective Alex Cross 2019s family is kidnapped by a madman who wants to turn Cross into a perfect killer.</p>
-                                <footer>Published by <cite title="Source Title">Little, Brown</cite></footer>
+                                <p id="detail-desc">Detective Alex Cross 2019s family is kidnapped by a madman who wants to turn Cross into a perfect killer.</p>
+                                <footer>Published by <cite title="Source Title" id="detail-publisher">Little, Brown</cite></footer>
                             </blockquote>
                             <div class="trends">
                                 <div>
                                     <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
-                                    <h4 style="display:inline;">Trends</h4>
+                                    <h4 style="display:inline;">Trends of Ranking</h4>
                                 </div>
-                                <div id="placeholder" style="width:160px;height:80px;"></div>
-                                <div>
+                                <div id="placeholder" style="width:300px;height:100px;margin:4px"></div>
+                                <!-- <div>
                                 <p style="margin:6px 0 -2px 10px;">Current Rank: 1</p>
                                 <p style="margin:6px 0 6px 10px;">Last Week: 5</p>
-                                </div>
+                                </div> -->
                             </div>
                             <script type="text/javascript">
-                                $.plot($("#placeholder"), [ {color: "rgb(0,0,255)" ,data: [[1, 13], [2, 5], [3, 2], [4, 6], [5, 1]]} ], { xaxis: { max: 5 },yaxis: { max: 15 } });
+                                $.plot($("#placeholder"), [ {color: "#6c8dbb" ,data: [[1, 13], [2, 5], [3, 2], [4, 6], [5, 1]]} ], { xaxis: { max: 5, ticks: [[1, " "], [2, " "], [3, " "], [4, "Last"],[5, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
                             </script>
 
-
-                            <div class="add-favo">
-                                <div class="favo-icon" id="favo_icon1" onClick="add_favo(1)" title="favorite" style="margin:6px;"></div>
-                                <p id="add1" style="display:inline;float:left;margin-top:6px;color:#ad6f59">Add to My Shelf</p>
-                            </div>
-
-                            </br></br></br>
+                            </br>
+                            
+                            <p class="detail-subtit" id="detail-isbn">ISBN: 9780316210942</p>
                             <div class="buy">
-                            <p class="detail-subtit">ISBN: 9780316210942</p>
                             <a href="#">
                             <img src="images/Amazon-Logo.jpg" width="14%">
                             </a>
