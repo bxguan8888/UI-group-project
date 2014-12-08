@@ -6,10 +6,16 @@
 	background-color: rbg(240, 240, 240);
 }
 
+.col-sm-3 {
+	width: 25%;
+}
+
 .book_pro {
 	background-color: rbg(255, 255, 255);
 	text-align: center;
 	padding: 10px;
+	height: auto;
+	width: 100%;
 }
 
 .book_pro:hover a img{
