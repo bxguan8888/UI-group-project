@@ -69,6 +69,7 @@ function BestSellerListsOverview(date)
 					"rank": bookTemp['rank'],
 					"rank_last_week":0,
 					"weeks_on_list":0,
+					"primary_isbn10":bookTemp['primary_isbn10'],
 					"primary_isbn13":bookTemp['primary_isbn13'],
 					"publisher":bookTemp['publisher'],
 					"author": bookTemp['author'],
@@ -178,6 +179,7 @@ function GetBestSellerList(list_Name)
 					"rank": bookTemp['rank'],
 					"rank_last_week":bookTemp['rank_last_week'],
 					"weeks_on_list":bookTemp['weeks_on_list'],
+					"primary_isbn10":bookTemp['primary_isbn10'],
 					"primary_isbn13":bookTemp['primary_isbn13'],
 					"publisher":bookTemp['publisher'],
 					"author": bookTemp['author'],
@@ -193,6 +195,16 @@ function GetBestSellerList(list_Name)
 				Books.push(book);
 			}
 			console.log(Books);
+
+			var favour_book = [];
+			// Get the added favourite book from store.js
+			store.foreach(function(key, val){
+				var res = key.substring(0,10);
+				if (res == "favourite"){
+					favour_book.push(val);
+				} 
+			})
+
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
 			$('#ListDescOnPage').empty();
@@ -214,6 +226,8 @@ function GetBestSellerList(list_Name)
                 }                           
 				// addedHtml=addedHtml+ "</div></div>";
 				// TODO:add addFavo function
+				for()
+
 				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
 				$('#update').append(addedHtml);
 			}
@@ -368,5 +382,40 @@ function init() {
 	}
 	var items = new Store('list_name');
 	items.set('list_name', 24);
+}
+
+var added_arr = []; // array to track if the book has been added to favourite or not
+function add_favo(arg){
+	var ele;
+	ele = "favo_icon" + arg;
+
+	//check global varable favorite
+	//if added then remove from favorite
+	//if not add to favorite
+
+	if(added_arr.length<=arg-1){
+		added_arr[arg-1]=false;
+	}
+	if(added_arr[arg-1]) {
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+		document.getElementById('add').innerHTML="Add to My shelf";
+		added_arr[arg-1] = false; // Indeed remove book from favourite
+	}else{
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+		document.getElementById('add').innerHTML="Remove from shelf";
+		added_arr[arg-1] = true;  // Indeed add book into favourite
+
+		var num_of_books = store.get('num_of_books');
+		
+		if (num_of_books==null){
+			num_of_books = 1;
+			store.set('favourite'+num_of_books, Books[arg-1]);
+		}
+		else{
+
+		}
+	}
+
+	// 
 }
 
