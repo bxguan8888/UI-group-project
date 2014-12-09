@@ -121,7 +121,7 @@ function BestSellerListsOverview(date)
 					//TODO add html	
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
 					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+					$(section_id).css('background-image','url(../main/images/bookmark-after.png)');
 				}
 				else{
 					//TODO add html
@@ -265,7 +265,7 @@ function GetBestSellerList(list_Name)
 					//TODO add html
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
 					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+					$(section_id).css('background-image','url(../main/images/bookmark-after.png)');
 				}
 				$('#update').append(addedHtml);
 			}
@@ -385,7 +385,7 @@ function init() {
 	items.set('list_name', 24);
 }
 
-var added_arr = []; // array to track if the book has been added to favourite or not
+// var added_arr = []; // array to track if the book has been added to favourite or not
 function add_favo(arg){
 	var ele;
 	ele = "favo_icon" + arg;
@@ -394,30 +394,41 @@ function add_favo(arg){
 	//if added then remove from favorite
 	//if not add to favorite
 
-	if(added_arr.length<=arg-1){
-		added_arr[arg-1]=false;
-	}
-	if(added_arr[arg-1]) {
-		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
-		document.getElementById('add').innerHTML="Add to My shelf";
-		added_arr[arg-1] = false; // Indeed remove book from favourite
-	}else{
-		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
-		document.getElementById('add').innerHTML="Remove from shelf";
-		added_arr[arg-1] = true;  // Indeed add book into favourite
+	// if(added_arr.length<=arg-1){
+	// 	added_arr[arg-1]=false;
+	// }
+	// if(added_arr[arg-1]) {
+	// 	document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+	// 	document.getElementById('add').innerHTML="Add to My shelf";
+	// 	added_arr[arg-1] = false; // Indeed remove book from favourite
+	// }else{
+	// 	document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+	// 	document.getElementById('add').innerHTML="Remove from shelf";
+	// 	added_arr[arg-1] = true;  // Indeed add book into favourite
 		
+	// }
+	var key;
+
+	var section_id="#favo_icon"+arg;
+
+	if (Books[arg]['primary_isbn13']!="None"){
+		key = Books[arg]['primary_isbn13'];
+	}
+	else{
+		key = Books[arg]['primary_isbn10'];
 	}
 
-	if (store.get(Books[arg-1]['primary_isbn10'])!=null || store.get(Books[arg-1]['primary_isbn13'])!=null){
-		if (store.get(Books[arg-1]['primary_isbn10'])!=null){
-			store.remove(Books[arg-1]['primary_isbn10']);
-		}
-		else if (store.get(Books[arg-1]['primary_isbn13'])!=null){
-			store.remove(Books[arg-1]['primary_isbn13']);
-		}
+	if (store.get(key)!=null){
+		store.remove(key);
 
-		var section_id="#favo_icon"+arg;
-		$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+		$(section_id).css('background-image','url(../images/bookmark-before.png)');
+	}
+	else if (store.get(key)==null){
+		store.set(key, Books[arg]);
+
+		console.log(Books[arg]['primary_isbn10']);
+
+		$(section_id).css('background-image','url(../images/bookmark-after.png)');
 	} 
 }
 
