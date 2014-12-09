@@ -20,8 +20,7 @@ function ShowRecommendation(){
 			
 		//Empty case
 		if(Object.getOwnPropertyNames(FavoBooks).length==0){
-
-
+			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
 		}
 		else{
 
