@@ -116,8 +116,19 @@ function BestSellerListsOverview(date)
 	});
 }
 
-function searchBestSellerList(){
-		
+function searchBestSellerList(listname,rank){
+	url = "http://api.nytimes.com/svc/books/v3/lists.jsonp?list-name="+listname+"&rank="+rank+"&api-key="+Book_api;
+
+	$.ajax({
+		'url': url,
+		'method': 'GET',
+		'jsonpCallback' : 'books',
+		'cache': true,
+		'dataType': 'jsonp',
+		'success': function(data, textStats, XMLHttpRequest){
+			console.log(data);
+		}
+	});
 }
 
 function InitialPage()
@@ -224,7 +235,7 @@ function GetBestSellerList(list_Name)
 				}else{
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
