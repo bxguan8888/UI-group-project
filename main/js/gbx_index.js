@@ -233,8 +233,7 @@ function GetBestSellerList(list_Name)
                 }                           
 				// addedHtml=addedHtml+ "</div></div>";
 				// TODO:add addFavo function
-				for()
-
+				
 				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
 				$('#update').append(addedHtml);
 			}
