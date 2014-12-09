@@ -100,7 +100,7 @@ function BestSellerListsOverview(date)
 				var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
 				book.amazon_product_url = searchAmazon;
 					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -202,7 +202,20 @@ function GetBestSellerList(list_Name)
 				Books.push(book);
 			}
 			console.log(Books);
+<<<<<<< Updated upstream
 			
+=======
+
+			// var favour_book = [];
+			// // Get the added favourite book from store.js
+			// store.foreach(function(key, val){
+			// 	var res = key.substring(0,10);
+			// 	if (res == "favourite"){
+			// 		favour_book.push(val);
+			// 	} 
+			// })
+
+>>>>>>> Stashed changes
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
 			$('#ListDescOnPage').empty();
@@ -271,7 +284,7 @@ function individualDetail(bookObject){
 	for (i=0;i<splitLink.length;i++){
 		amazonlink += splitLink[i];
 	}
-	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.jpg\" width=\"14%\"></a>";
+	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.png\" width=\"14%\"></a>";
 	$("#buy").empty();
 	$("#buy").append(amazonLinkUpdt);
 }
