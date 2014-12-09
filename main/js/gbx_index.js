@@ -22,7 +22,7 @@ function ShowRecommendation(){
 			for(var listName in AllBooksInFavoListsDic){
 				var books=AllBooksInFavoListsDic[listName];
 				for(var book in books){
-
+				book=books[book];
 
 				if((i+1)%4==0){
 					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
@@ -30,6 +30,7 @@ function ShowRecommendation(){
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}	
 				var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
+				// var encoded_name = book.list_name;
 				var inlistRank = book.rank;
 				//var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
 				//book.amazon_product_url = searchAmazon;
@@ -174,7 +175,7 @@ function BestSellerListsOverview(date)
 			$('#ListDescOnPage').empty();
 			for(i=0;i<Books.length;i++){
 				var book=Books[i];
-				store.set('book_detail', book);
+				// store.set('book_detail', book);
 				if((i+1)%4==0){
 					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
 				}else{
