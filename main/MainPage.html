@@ -15,8 +15,11 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/gbx_index.js"></script>
     <script src="js/store.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/datepicker3.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
@@ -49,7 +52,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist(null)">Default</a></li>
-                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('published-date')">Published Date</a></li>
+                        <li id="date" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('published-date')"l.>Published Date</a></li>
                         <li id="isbn" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('isbn')">ISBN</a></li>
                         <li id="rank-now" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank')">Current Rank</a></li>
                         <li id="rank-last" role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="sortlist('rank-last-week')">Last-Week Rank</a></li>
@@ -73,7 +76,8 @@
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                 <h3 style="display:inline">Categories</h3>
                 </div>
-                <li><a href="#" onclick="BestSellerListsOverview(null)">Lists Overview</a></li>
+                <li><a href="#" onclick="ShowRecommendation()">Recommend</a></li>
+                <li><a href="Mainpage.html">Lists Overview</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -83,6 +87,16 @@
 
             <div class="fake-sidebar">
             </div>
+            <div style="margin-left: 30px; color:#5c5c5c; text-align:center;">
+            <h4 style="display:inline; margin-right:10px;">Earlier Lists</h4>
+            <input class="datepicker" id="datepicker" data-date-format="yyyy-mm-dd" style="width:100px;">
+            <button type="button" class="btn btn-default" onclick="newoverviewdate()">Reload List</button>
+            </div>
+            <script>
+                $('.datepicker').datepicker({
+                    todayHighlight: true
+                })
+            </script>
             <header style="margin:40px;">
                 <h2 id="ListNameOnPage" style="color:#525252"></h2>
                 <p id="ListDescOnPage" style="color:#909090;margin-left:4px"></p>
