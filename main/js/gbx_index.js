@@ -1,8 +1,4 @@
 var Books=[];
-var AllBooksInFavoListsDic=[];
-var FavoriteBooksDic=[]
-
-
 
 var Book_api = "22167e35f2cd71ee36835bba032fee38:1:70162819";
 
@@ -414,39 +410,39 @@ function init() {
 	items.set('list_name', 24);
 }
 
-var added_arr = []; // array to track if the book has been added to favourite or not
+// var added_arr = []; // array to track if the book has been added to favourite or not
 function add_favo(arg){
 	var ele;
 	ele = "favo_icon" + arg;
 
-	//check global varable favorite
-	//if added then remove from favorite
-	//if not add to favorite
+	var key;
 
-	if(added_arr.length<=arg-1){
-		added_arr[arg-1]=false;
+	// console.log("1234");
+
+	if (Books[arg]['primary_isbn13']!="None"){
+		key = Books[arg]['primary_isbn13'];
 	}
-	if(added_arr[arg-1]) {
+	else{
+		key = Books[arg]['primary_isbn10'];
+	}
+
+	if (store.get(key)!=null){
+		store.remove(key);
+
 		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
-		document.getElementById('add').innerHTML="Add to My shelf";
-		added_arr[arg-1] = false; // Indeed remove book from favourite
-	}else{
-		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
-		document.getElementById('add').innerHTML="Remove from shelf";
-		added_arr[arg-1] = true;  // Indeed add book into favourite
-		
+	 	document.getElementById('add'+arg).innerHTML="Add to My shelf";
 	}
+	else if (store.get(key)==null){
+		store.set(key, Books[arg]);
 
-	if (store.get(Books[arg-1]['primary_isbn10'])!=null || store.get(Books[arg-1]['primary_isbn13'])!=null){
-		if (store.get(Books[arg-1]['primary_isbn10'])!=null){
-			store.remove(Books[arg-1]['primary_isbn10']);
-		}
-		else if (store.get(Books[arg-1]['primary_isbn13'])!=null){
-			store.remove(Books[arg-1]['primary_isbn13']);
-		}
+		// console.log(key);
 
-		var section_id="#favo_icon"+arg;
-		$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+	 	document.getElementById('add'+arg).innerHTML="Remove from shelf";
 	} 
 }
 
+function DisplayMyShelf()
+{
+	
+}
