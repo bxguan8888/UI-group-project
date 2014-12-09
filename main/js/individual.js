@@ -41,5 +41,10 @@ function individualDetail(bookObject){
 	$("#detail-isbn").empty();
 	$("#detail-isbn").append("ISBN: "+bookObject.bookisbn);
 	$("#buy").empty();
-	$("#buy").append("<a href=\""+bookObject.bookamazon+"\" target=_blank><img src=\"images/Amazon-Logo.jpg\" width=\"14%\">");
+	if(bookObject.bookamazon!='undefined'){
+		$("#buy").append("<a href=\""+bookObject.bookamazon+"\" target=_blank><img src=\"images/Amazon-Logo.jpg\" width=\"14%\">");
+	}
 }
+
+
+
