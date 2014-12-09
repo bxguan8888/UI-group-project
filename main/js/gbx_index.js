@@ -202,16 +202,7 @@ function GetBestSellerList(list_Name)
 				Books.push(book);
 			}
 			console.log(Books);
-
-			var favour_book = [];
-			// Get the added favourite book from store.js
-			store.foreach(function(key, val){
-				var res = key.substring(0,10);
-				if (res == "favourite"){
-					favour_book.push(val);
-				} 
-			})
-
+			
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
 			$('#ListDescOnPage').empty();
@@ -410,18 +401,16 @@ function add_favo(arg){
 		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 		document.getElementById('add').innerHTML="Remove from shelf";
 		added_arr[arg-1] = true;  // Indeed add book into favourite
-
-		var num_of_books = store.get('num_of_books');
 		
-		if (num_of_books==null){
-			num_of_books = 1;
-			store.set('favourite'+num_of_books, Books[arg-1]);
-		}
-		else{
-
-		}
 	}
 
-	// 
+	if (store.get(Books[arg-1]['primary_isbn10'])!=null || store.get(Books[arg-1]['primary_isbn13'])!=null){
+		if (store.get(Books[arg-1]['primary_isbn10'])!=null){
+			store.remove(Books[arg-1]['primary_isbn10']);
+		}
+		else if (store.get(Books[arg-1]['primary_isbn13'])!=null){
+			store.remove(Books[arg-1]['primary_isbn13']);
+		}
+	} 
 }
 
