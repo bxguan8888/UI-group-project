@@ -80,7 +80,8 @@
                 <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
                 <h3 style="display:inline">Categories</h3>
                 </div>
-                <li><a href="#" onclick="BestSellerListsOverview(null)">Lists Overview</a></li>
+                <li><a href="#">Recommend</a></li>
+                <li><a href="MainPage.html">Lists Overview</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -126,7 +127,13 @@
 
                             </div>
                             <script>
-                                $.plot($("#ranktrend"), [ {color: "#6c8dbb" ,data: [[1, 13], [2, 5], [3, 2], [4, 6], [5, 1]]} ], { xaxis: { max: 5, ticks: [[1, " "], [2, " "], [3, " "], [4, "Last"],[5, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
+                                var curBook = store.get('book_detail');
+                                if(curBook.rank_last_week!=0){
+                                    $.plot($("#ranktrend"), [ {color: "#6c8dbb" ,data: [[1, curBook.rank_last_week], [2, curBook.rank]]} ], { xaxis: { max: 2, ticks: [[1, "Last"],[2, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
+                                }else{
+                                    $.plot($("#ranktrend"), [ {color: "#6c8dbb" ,data: [[1, curBook.rank], [2, curBook.rank]]} ], { xaxis: { max: 2, ticks: [[1, "Last"],[2, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
+                                }
+                                store.remove('book_detail');
                             </script>
 
                             </br>
@@ -138,7 +145,13 @@
                             </a>
                             </div>
                         </div>
-                    </div>           
+                    </div>
+                    </br></br></br>
+                    <div class="well" id="commentwell">                        
+                        <h3 style="margin-bottom:14px;margin-top:-6px;color:#5c5c5c">Comments</h3>
+                        <div id="commentBody" style="color:gray">
+                        </div>
+                    </div>          
                 </div>
             </div>
 

@@ -14,10 +14,18 @@ var pickeddate = null;
 
 function ShowRecommendation(){
 
-			$('#update').empty();
-			$('#ListNameOnPage').empty();
-			$('#ListDescOnPage').empty();
+		$('#update').empty();
+		$('#changedate').empty();
+		$('#ListNameOnPage').empty();
+		$('#ListDescOnPage').empty();
 			
+		//Empty case
+		if(Object.getOwnPropertyNames(FavoBooks).length==0){
+			console.log("hello world!");
+			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
+		}
+		else{
+
 			var i=0;
 			for(var listName in AllBooksInFavoListsDic){
 				var books=AllBooksInFavoListsDic[listName];
@@ -81,6 +89,7 @@ function ShowRecommendation(){
 				i++;
 				}
 			}
+		}
 
 
 }
@@ -241,7 +250,7 @@ function InitialPage()
 
 	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
-
+	$("#commentwell").css("visibility","hidden");
 	var date=pickeddate;
 
 	BestSellerListNames();
@@ -259,6 +268,8 @@ function GetBestSellerList(list_Name)
 	// Caution: must use the encoded list name, i.e use '-' to replace the space, the list-
 	// name returned has this field.
 	$("#dropdownSort").css("visibility","visible");
+	$("#changedate").css("visibility","hidden");
+	$("#commentwell").css("visibility","hidden");
 	sort_by = currentSortMethod;
 	currentCategory = list_Name;
 
@@ -397,90 +408,6 @@ function sortlist(sortorder){
 	GetBestSellerList(currentCategory);
 }
 
-function SearchBookReview(data)
-{
-	// 'data' passed in could be 'isbn13', title or book name.
-
-	// var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&title="+data+"&api-key="+Book_api;
-	// // Search by title
-
-	// var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&isbn="+data+"&api-key="+Book_api;
-	// // Search by ISBN
-
-	var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&title=REVIVAL&api-key="+Book_api;
-	// For testing
-
-	$.ajax({
-		'url': url,
-		'method': 'GET',
-		'jsonpCallback' : 'books',
-		'cache': true,
-		'dataType': 'jsonp',
-		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
-
-			SearchArticle(data);
-			// Turns out the effect of the article search API is worse than the summary
-			// "summary" of the book review itself
-		}
-	});
-}
-
-function SearchArticle(review_data)
-{
-	var article_api_key = "f51ebf30eff56e3dc5584bc8d2c5e8db:7:70162819";
-
-	var article_URL = "http://www.nytimes.com/2014/11/14/books/stephen-kings-revival.html";
-
-	var encodeURL = encodeURIComponent(article_URL);
-
-	var URL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?";
-
-	URL = URL+"fq=web_url:(\""+encodeURL+"\")&api-key="+article_api_key;
-
-	$.ajax({
-		'url': URL,
-		'method': 'GET',
-		'cache': true,
-		'dataType': 'json',
-		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
-		}
-	});
-}
-
-function BestSellerHistory(book_name)
-{
-	// This function is used to retrieve history ranking of certain book
-	// var book_name1 = book_name;
-
-	// var encode_bookname = book_name.split(' ');
-	// var len = encode_bookname.length;
-	// var bookname = "";
-
-	// for (var i=0; i<len; i++){
-	// 	bookname = bookname + "+" + encode_bookname[i];
-	// }
-
-	// var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?callback=books&title=THE+GOLDFINCH&api-key="+Book_api;
-
-	var url = "http://api.nytimes.com/svc/books/v3/lists/best-sellers/history.jsonp?title=THE+GOLDFINCH&api-key="+Book_api;
-	// For test
-	// Caution about the format of the book title passed in
-
-	var callback = function(res){
-		console.log(res);
-	}
-
-	$.ajax({
-		'url': url,
-		'method': 'GET',
-		// 'jsonpCallback' : 'books',
-		'cache': true,
-		'dataType': 'jsonp',
-		'success': callback
-	});
-}
 
 function init() {
 	if (!store.enabled) {
