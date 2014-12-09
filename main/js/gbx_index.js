@@ -108,8 +108,24 @@ function BestSellerListsOverview(date)
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
                 }                           
 				// addedHtml=addedHtml+ "</div></div>";
-				// TODO:add addFavo function
-				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				
+				var key="";
+				if(book['primary_isbn13']!='None'){
+					key=book['primary_isbn13'];
+				}
+				else{
+					key=book['primary_isbn10'];
+				}		
+				// this book is not in favo list
+				if(store.get(key)==null){
+					//TODO add html	
+					// addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				}
+				else{
+					//TODO add html
+					// addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				}
+
 				$('#update').append(addedHtml);
 			}
 		}
@@ -205,12 +221,12 @@ function GetBestSellerList(list_Name)
 
 			var favour_book = [];
 			// Get the added favourite book from store.js
-			store.foreach(function(key, val){
-				var res = key.substring(0,10);
-				if (res == "favourite"){
-					favour_book.push(val);
-				} 
-			})
+			// store.foreach(function(key, val){
+			// 	var res = key.substring(0,10);
+			// 	if (res == "favourite"){
+			// 		favour_book.push(val);
+			// 	} 
+			// })
 
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
@@ -232,9 +248,24 @@ function GetBestSellerList(list_Name)
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
                 }                           
 				// addedHtml=addedHtml+ "</div></div>";
-				// TODO:add addFavo function
 				
-				addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				//add Favo tag
+				var key="";
+				if(book['primary_isbn13']!='None'){
+					key=book['primary_isbn13'];
+				}
+				else{
+					key=book['primary_isbn10'];
+				}		
+				// this book is not in favo list
+				if(store.get(key)==null){
+					//TODO add html	
+					// addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				}
+				else{
+					//TODO add html
+					// addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+				}
 				$('#update').append(addedHtml);
 			}
 
