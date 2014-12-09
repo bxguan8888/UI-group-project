@@ -116,19 +116,8 @@ function BestSellerListsOverview(date)
 	});
 }
 
-function searchBestSellerList(listname,rank){
-	url = "http://api.nytimes.com/svc/books/v3/lists.jsonp?list-name="+listname+"&rank="+rank+"&api-key="+Book_api;
-
-	$.ajax({
-		'url': url,
-		'method': 'GET',
-		'jsonpCallback' : 'books',
-		'cache': true,
-		'dataType': 'jsonp',
-		'success': function(data, textStats, XMLHttpRequest){
-			console.log(data);
-		}
-	});
+function searchBestSellerList(){
+		
 }
 
 function InitialPage()
@@ -422,6 +411,9 @@ function add_favo(arg){
 		else if (store.get(Books[arg-1]['primary_isbn13'])!=null){
 			store.remove(Books[arg-1]['primary_isbn13']);
 		}
+
+		var section_id="#favo_icon"+arg;
+		$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
 	} 
 }
 
