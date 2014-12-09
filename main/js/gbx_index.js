@@ -444,5 +444,40 @@ function add_favo(arg){
 
 function DisplayMyShelf()
 {
-	
+	var i = 0;
+
+	Books = [];
+
+	$('#ListNameOnPage').empty();
+	$('#ListNameOnPage').append("My BookShelf");
+	$('#ListDescOnPage').empty();
+	// $('#ListDescOnPage').append("Updated on "+book.published_date);
+	$('#update').empty();
+
+	store.forEach(function(key, val){
+		if(val['title']!=null){
+			Books.push(val);
+			if((i+1)%4==0){
+				var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
+			}else{
+				var addedHtml="<div class=\"col-sm-3\">";		
+			}
+			addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+val['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+            addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+val['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+val['list_name']+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+val["rank"]+"</h5>";	
+		}
+
+		if(val['rank_last_week']!=0){
+        	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+val["rank_last_week"]+"</h5></div>";    
+        }else{
+        	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
+        }
+
+        // Adding the favourite flag
+        addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";  
+        $('#update').append(addedHtml);
+        var section_id="favo_icon"+i;
+		document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+
+		i++;
+	})
 }
