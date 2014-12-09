@@ -1,4 +1,5 @@
 var datainurl = $.url().param('data');
+console.log(datainurl);
 var splitTemp = datainurl.split("bookimage:");
 splitTemp = splitTemp[1].split(",bookname:");
 var bookimage = splitTemp[0];
@@ -12,7 +13,11 @@ splitTemp = splitTemp[1].split(",bookisbn:");
 var bookpublisher = splitTemp[0];
 splitTemp = splitTemp[1].split(",bookamazon:");
 var bookisbn = splitTemp[0];
-var bookamazon = splitTemp[1];
+splitTemp = splitTemp[1].split(",bookcurrentrank:");
+var bookamazon = splitTemp[0];
+splitTemp = splitTemp[1].split(",booklastrank:");
+var bookcurrentrank = splitTemp[0];
+var booklastrank = splitTemp[1];
 var currentBook = {
 	"bookimage":bookimage,
 	"bookname":bookname,
@@ -20,7 +25,9 @@ var currentBook = {
 	"bookdesc":bookdesc,
 	"bookpublisher":bookpublisher,
 	"bookisbn":bookisbn,
-	"bookamazon":bookamazon
+	"bookamazon":bookamazon,
+	"bookcurrentrank":bookcurrentrank,
+	"booklastrank":booklastrank
 };
 console.log(currentBook);
 $( document ).ready(function() {
@@ -42,8 +49,11 @@ function individualDetail(bookObject){
 	$("#detail-isbn").append("ISBN: "+bookObject.bookisbn);
 	$("#buy").empty();
 	if(bookObject.bookamazon!='undefined'){
-		$("#buy").append("<a href=\""+bookObject.bookamazon+"\" target=_blank><img src=\"images/Amazon-Logo.jpg\" width=\"14%\">");
+		$("#buy").append("<a href=\""+bookObject.bookamazon+"\" target=_blank><img src=\"images/Amazon-Logo.png\" width=\"14%\">");
 	}
+	//var chartObject = [{color:"#6c8dbb",data:[[1,bookObject.bookcurrentrank],[2,bookObject.booklastrank]]}];
+	//var option = { xaxis: { max: 5, ticks: [[1, "Last"],[2, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} };
+	//$.plot($("#ranktrend"),[{color:"#6c8dbb",data:[[1,bookObject.bookcurrentrank],[2,bookObject.booklastrank]]}],{ xaxis: { max: 5, ticks: [[1, "Last"],[2, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
 }
 
 

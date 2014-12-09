@@ -100,7 +100,7 @@ function BestSellerListsOverview(date)
 				var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
 				book.amazon_product_url = searchAmazon;
 					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -219,14 +219,6 @@ function GetBestSellerList(list_Name)
 			}
 			console.log(Books);
 
-			var favour_book = [];
-			// Get the added favourite book from store.js
-			// store.foreach(function(key, val){
-			// 	var res = key.substring(0,10);
-			// 	if (res == "favourite"){
-			// 		favour_book.push(val);
-			// 	} 
-			// })
 
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
@@ -240,7 +232,7 @@ function GetBestSellerList(list_Name)
 				}else{
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -311,7 +303,7 @@ function individualDetail(bookObject){
 	for (i=0;i<splitLink.length;i++){
 		amazonlink += splitLink[i];
 	}
-	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.jpg\" width=\"14%\"></a>";
+	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.png\" width=\"14%\"></a>";
 	$("#buy").empty();
 	$("#buy").append(amazonLinkUpdt);
 }
@@ -441,18 +433,19 @@ function add_favo(arg){
 		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 		document.getElementById('add').innerHTML="Remove from shelf";
 		added_arr[arg-1] = true;  // Indeed add book into favourite
-
-		var num_of_books = store.get('num_of_books');
 		
-		if (num_of_books==null){
-			num_of_books = 1;
-			store.set('favourite'+num_of_books, Books[arg-1]);
-		}
-		else{
-
-		}
 	}
 
-	// 
+	if (store.get(Books[arg-1]['primary_isbn10'])!=null || store.get(Books[arg-1]['primary_isbn13'])!=null){
+		if (store.get(Books[arg-1]['primary_isbn10'])!=null){
+			store.remove(Books[arg-1]['primary_isbn10']);
+		}
+		else if (store.get(Books[arg-1]['primary_isbn13'])!=null){
+			store.remove(Books[arg-1]['primary_isbn13']);
+		}
+
+		var section_id="#favo_icon"+arg;
+		$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+	} 
 }
 
