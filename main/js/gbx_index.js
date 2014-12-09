@@ -1,4 +1,6 @@
 var Books=[];
+var AllBooksInFavoListsDic=[];
+var FavoBooks =[]; 
 
 var Book_api = "22167e35f2cd71ee36835bba032fee38:1:70162819";
 
@@ -7,6 +9,79 @@ var currentSortMethod = null;
 // BestSellerListsOverview( "2014-11-29");
 // BestSellerListNames()
 // GetBestSellerList("combined-print-and-e-book-fiction");
+
+
+function ShowRecommendation(){
+
+			$('#update').empty();
+			$('#ListNameOnPage').empty();
+			$('#ListDescOnPage').empty();
+			
+			var i=0;
+			for(var listName in AllBooksInFavoListsDic){
+				var books=AllBooksInFavoListsDic[listName];
+				for(var book in books){
+
+
+				if((i+1)%4==0){
+					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
+				}else{
+					var addedHtml="<div class=\"col-sm-3\">";		
+					}	
+				var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
+				var inlistRank = book.rank;
+				//var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
+				//book.amazon_product_url = searchAmazon;
+					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+                addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
+                if(book['rank_last_week']!=0){
+                	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
+                }else{
+                	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
+                }                           
+				// addedHtml=addedHtml+ "</div></div>";
+				
+				var key="";
+				if(book['primary_isbn13']!='None'){
+					key=book['primary_isbn13'];
+				}
+				else{
+					key=book['primary_isbn10'];
+				}		
+				// this book is not in favo list
+				if(store.get(key)==null){
+					//TODO add html	
+					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo_from_remcommend("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+				}
+				else{
+					//TODO add html
+					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo_from_remcommend("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+				}
+
+				$('#update').append(addedHtml);
+
+				if(store.get(key)==null){
+					//TODO add html	
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+				}
+				else{
+					//TODO add html
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+				}
+
+				i++;
+				}
+			}
+
+
+}
 
 function BestSellerListNames()
 {
@@ -426,6 +501,74 @@ function add_favo(arg){
 		key = Books[arg]['primary_isbn10'];
 	}
 
+
+	var book = Books[arg];
+	var valid_key;
+	if(book["primary_isbn13"]!="None"){
+		valid_key=book["primary_isbn13"];
+	}else{
+		valid_key=book["primary_isbn10"]; 		
+ 	}
+	//remove
+	if (store.get(key)!=null){
+		store.remove(key);
+
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+	 	document.getElementById('add'+arg).innerHTML="Add to My shelf";
+
+	 	delete FavoBooks[book["list_name"]][valid_key];
+	 	console.log(Object.getOwnPropertyNames(FavoBooks[book["list_name"]]).length);
+	 	if( Object.getOwnPropertyNames(FavoBooks[book["list_name"]]).length ==1){
+	 		delete FavoBooks[book["list_name"]];
+	 		delete AllBooksInFavoListsDic[book["list_name"]];
+
+	 	}
+
+	}
+	//add
+	else if (store.get(key)==null){
+		store.set(key, Books[arg]);
+
+		// console.log(key);
+
+		document.getElementById(ele).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+	 	document.getElementById('add'+arg).innerHTML="Remove from shelf";
+
+		if(FavoBooks[book["list_name"]]!=null){
+			FavoBooks[book["list_name"]][valid_key]=book;
+		}
+		else{
+			FavoBooks[book["list_name"]]=[];
+			FavoBooks[book["list_name"]][valid_key]=book;
+			AllBooksInFavoListsDic[book["list_name"]]=[];
+			for(var i=0;i<5;i++){
+				AllBooksInFavoListsDic[book["list_name"]].push(Books[i]);
+			}
+		}
+	} 
+
+	console.log(FavoBooks);
+	console.log(AllBooksInFavoListsDic);
+
+}
+
+
+
+function add_favo_from_remcommend(arg){
+	var ele;
+	ele = "favo_icon" + arg;
+
+	var key;
+
+	// console.log("1234");
+
+	if (Books[arg]['primary_isbn13']!="None"){
+		key = Books[arg]['primary_isbn13'];
+	}
+	else{
+		key = Books[arg]['primary_isbn10'];
+	}
+
 	if (store.get(key)!=null){
 		store.remove(key);
 
@@ -441,6 +584,7 @@ function add_favo(arg){
 	 	document.getElementById('add'+arg).innerHTML="Remove from shelf";
 	} 
 }
+
 
 function DisplayMyShelf()
 {
