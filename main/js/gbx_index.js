@@ -514,7 +514,7 @@ function DisplayMyShelf()
 	Books = [];
 
 	$("#dropdownSort").css("visibility","hidden");
-
+	$("#changedate").css("visibility","hidden");
 	$('#ListNameOnPage').empty();
 	$('#ListNameOnPage').append("My BookShelf");
 	$('#ListDescOnPage').empty();
