@@ -21,7 +21,6 @@ function individualDetail(bookObject){
 	if(bookObject.amazon_product_url!=null){
 		$("#buy").append("<a href=\""+bookObject.amazon_product_url+"\" target=_blank><img src=\"images/Amazon-Logo.png\" width=\"14%\">");
 	}
-
 	store.remove('book_detail');
 }
 

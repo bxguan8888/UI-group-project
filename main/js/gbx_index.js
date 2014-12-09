@@ -4,6 +4,7 @@ var Book_api = "22167e35f2cd71ee36835bba032fee38:1:70162819";
 
 var currentCategory = null; 
 var currentSortMethod = null;
+var pickeddate = null;
 // BestSellerListsOverview( "2014-11-29");
 // BestSellerListNames()
 // GetBestSellerList("combined-print-and-e-book-fiction");
@@ -35,6 +36,14 @@ function BestSellerListNames()
 	});
 	 }, 500);
 }
+
+function newoverviewdate(){
+	var newdate = $("#datepicker")[0].value;
+	pickeddate = newdate;
+	InitialPage();
+	$("#datepicker")[0].value = "";
+}
+
 
 function BestSellerListsOverview(date)
 {
@@ -157,7 +166,7 @@ function InitialPage()
 	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
 
-	var date=null;
+	var date=pickeddate;
 
 	BestSellerListNames();
 	BestSellerListsOverview(date);
