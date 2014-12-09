@@ -90,6 +90,7 @@ function BestSellerListsOverview(date)
 			$('#ListDescOnPage').empty();
 			for(i=0;i<Books.length;i++){
 				var book=Books[i];
+				store.set('book_detail', book);
 				if((i+1)%4==0){
 					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
 				}else{
@@ -97,10 +98,10 @@ function BestSellerListsOverview(date)
 					}	
 				var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
 				var inlistRank = book.rank;
-				var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
-				book.amazon_product_url = searchAmazon;
+				//var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
+				//book.amazon_product_url = searchAmazon;
 					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -146,10 +147,6 @@ function BestSellerListsOverview(date)
 			}
 		}
 	});
-}
-
-function searchBestSellerList(){
-		
 }
 
 function InitialPage()
@@ -235,7 +232,6 @@ function GetBestSellerList(list_Name)
 			}
 			console.log(Books);
 
-
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
 			$('#ListDescOnPage').empty();
@@ -243,12 +239,13 @@ function GetBestSellerList(list_Name)
 			$('#update').empty();
 			for(i=0;i<Books.length;i++){
 				var book=Books[i];
+				//store.set('book_detail', book);
 				if((i+1)%4==0){
 					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
 				}else{
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}
-				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html?data=bookimage:"+book.book_image+",bookname:"+book['title']+",bookauthor:"+book.author+",bookdesc:"+book['description']+",bookpublisher:"+book.publisher+",bookisbn:"+book.primary_isbn13+",bookamazon:"+book.amazon_product_url+",bookcurrentrank:"+book.rank+",booklastrank:"+book.rank_last_week+"\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
+				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" >"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: "+book["rank_last_week"]+"</h5></div>";    
@@ -298,6 +295,10 @@ function GetBestSellerList(list_Name)
 	}); 
 }
 
+function updateDetailPage(bookindex){
+	console.log(bookindex);
+	store.set('book_detail', Books[bookindex]);
+}
 
 function sortlist(sortorder){
 	$("#dropdownSort").empty();
