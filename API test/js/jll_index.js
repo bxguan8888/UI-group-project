@@ -22,7 +22,7 @@ function BestSellerListNames()
 function BestSellerListsOverview(date)
 {
 	// optional date field 
-	var url = "http://api.nytimes.com/svc/books/v3/lists/overview.jsonp?callback=books&api-key="+Book_api;
+	var url = "http://api.nytimes.com/svc/books/v3/lists/overview.jsonp\?callback=books&api-key="+Book_api;
 
 	$.ajax({
 		'url': url,
@@ -127,3 +127,17 @@ function SearchArticle(review_data)
 	});
 }
 
+function searchBestSellerList(listname,rank){
+	url = "http://api.nytimes.com/svc/books/v3/lists.json?list-name="+listname+"&rank="+rank+"&api-key="+Book_api;
+
+	$.ajax({
+		'url': url,
+		'method': 'GET',
+		'jsonpCallback' : 'books',
+		'cache': true,
+		'dataType': 'jsonp',
+		'success': function(data, textStats, XMLHttpRequest){
+			console.log(data);
+		}
+	});
+}
