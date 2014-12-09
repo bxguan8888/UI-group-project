@@ -259,6 +259,7 @@ function GetBestSellerList(list_Name)
 	// Caution: must use the encoded list name, i.e use '-' to replace the space, the list-
 	// name returned has this field.
 	$("#dropdownSort").css("visibility","visible");
+	$("#changedate").css("visibility","hidden");
 	sort_by = currentSortMethod;
 	currentCategory = list_Name;
 
