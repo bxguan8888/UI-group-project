@@ -13,19 +13,22 @@ var pickeddate = null;
 
 
 function ShowRecommendation(){
+	 	// Display Recommendation list.
 
-		$('#update').empty();
-		$('#changedate').css("visibility","hidden");
+		$('#update').empty();							// Empty the frame to prepare load for 
+		$('#changedate').css("visibility","hidden");	// Recommendation list
 		$('#ListNameOnPage').empty();
 		$('#ListDescOnPage').empty();
 		$('#dropdownSort').css("visibility","hidden");
 			
 		//Empty case
 		if(Object.getOwnPropertyNames(FavoBooks).length==1){
+			// When there is no favourite books added.
 			console.log("hello world!");
 			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
 		}
 		else{
+			// Scan through the recommended list and display the results.
 			console.log("has recommended content!")
 			console.log(Object.getOwnPropertyNames(FavoBooks).length);
 			var i=0;
@@ -40,11 +43,9 @@ function ShowRecommendation(){
 					var addedHtml="<div class=\"col-sm-3\">";		
 					}	
 				var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
-				// var encoded_name = book.list_name;
+
 				var inlistRank = book.rank;
-				//var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
-				//book.amazon_product_url = searchAmazon;
-					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
+
 				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
@@ -52,7 +53,6 @@ function ShowRecommendation(){
                 }else{
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
                 }                           
-				// addedHtml=addedHtml+ "</div></div>";
 				
 				var key="";
 				if(book['primary_isbn13']!='None'){
@@ -65,25 +65,21 @@ function ShowRecommendation(){
 				if(store.get(key)==null){
 					//TODO add html	
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo_from_remcommend("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
 					//TODO add html
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo_from_remcommend("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
 
 				$('#update').append(addedHtml);
 
 				if(store.get(key)==null){
-					//TODO add html	
+					// When the book is not in the favorite list
 					var section_id="favo_icon"+i;
 					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
-					//TODO add html
+					// When the book is in the favorite list
 					var section_id="favo_icon"+i;
 					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
@@ -98,6 +94,7 @@ function ShowRecommendation(){
 
 function BestSellerListNames()
 {
+	// Retrieve all the categories of books.
 	setTimeout(function () {
 	var url = "http://api.nytimes.com/svc/books/v3/lists/names.jsonp?callback=books&api-key="+Book_api;
 
@@ -125,6 +122,7 @@ function BestSellerListNames()
 }
 
 function newoverviewdate(){
+	// Retrieve the date input to search for previous bestsellers
 	var newdate = $("#datepicker")[0].value;
 	pickeddate = newdate;
 	InitialPage();
@@ -134,6 +132,8 @@ function newoverviewdate(){
 
 function BestSellerListsOverview(date)
 {
+	// Retrieve the overview of the best sellers
+
 	// optional date field 
 	Books=[];
 	var url = "";
@@ -184,9 +184,10 @@ function BestSellerListsOverview(date)
 			$('#update').empty();
 			$('#ListNameOnPage').empty();
 			$('#ListDescOnPage').empty();
+
+			// Display the overview in the list
 			for(i=0;i<Books.length;i++){
 				var book=Books[i];
-				// store.set('book_detail', book);
 				if((i+1)%4==0){
 					var addedHtml="<div class=\"row\"><div class=\"col-sm-3\">";
 				}else{
@@ -194,9 +195,7 @@ function BestSellerListsOverview(date)
 					}	
 				var encoded_name = book.list_name.replace(/ /g, "-").toLowerCase();
 				var inlistRank = book.rank;
-				//var searchAmazon = searchBestSellerList(encoded_name,inlistRank);
-				//book.amazon_product_url = searchAmazon;
-					// console.log(book.list_name.replace(/ /g, "-").toLowerCase());
+
 				addedHtml=addedHtml+"<div class=\"thumbnail book_pro\" style=\"float:left;\"><a target=\"_blank\" href=\"individualBook.html\" onclick=\"updateDetailPage("+i+")\" id=\"transToIndividual\"><img id=\"book-img\" src=\""+book['book_image']+"\" alt=\"\" style=\"display:inline; padding:6px\" height=\"80px\"> ";
                 addedHtml=addedHtml+ "</a><div><h4 id=\"book-title\" class=\"book-title\">"+book['title']+"</h4><a id=\"book-list\" class=\"book-category\" href=\"#\" onclick=\"GetBestSellerList(\'"+encoded_name+"\')\">"+book.list_name+"</a><h5 id=\"book-rank-now\" class=\"book-desc\">Current Rank:  "+book["rank"]+"</h5>";
                 if(book['rank_last_week']!=0){
@@ -204,7 +203,6 @@ function BestSellerListsOverview(date)
                 }else{
                 	addedHtml=addedHtml+ "<h5 id=\"book-rank-last\" class=\"book-desc\">Last Week: -</h5></div>";    
                 }                           
-				// addedHtml=addedHtml+ "</div></div>";
 				
 				var key="";
 				if(book['primary_isbn13']!='None'){
@@ -217,14 +215,10 @@ function BestSellerListsOverview(date)
 				if(store.get(key)==null){
 					//TODO add html	
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
 					//TODO add html
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
 
 				$('#update').append(addedHtml);
@@ -250,7 +244,6 @@ function InitialPage()
 	// This function is used to call BestsellerListNames and BestSellerListsOverview
 	// for the initial page.
 
-	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
 	$("#commentwell").css("visibility","hidden");
 	$("#changedate").css("visibility","visible");
@@ -290,7 +283,6 @@ function GetBestSellerList(list_Name)
 		bestSeller_List=bestSeller_List+"api-key="+Book_api;
 	}
 
-	// This one is only for testing
 
 	$.ajax({
 		'url': bestSeller_List,
@@ -331,6 +323,8 @@ function GetBestSellerList(list_Name)
 			}
 			console.log(Books);
 
+			// Display the list retrieved
+
 			$('#ListNameOnPage').empty();
 			$('#ListNameOnPage').append(book.list_name);
 			$('#ListDescOnPage').empty();
@@ -365,14 +359,10 @@ function GetBestSellerList(list_Name)
 				if(store.get(key)==null){
 					//TODO add html	
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
 					//TODO add html
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
-					// var section_id="favo_icon"+i;
-					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
 
 				$('#update').append(addedHtml);
@@ -395,11 +385,13 @@ function GetBestSellerList(list_Name)
 }
 
 function updateDetailPage(bookindex){
+	// Store the book detail of a certain book which the user wants to see more.
 	console.log(bookindex);
 	store.set('book_detail', Books[bookindex]);
 }
 
 function sortlist(sortorder){
+	// Function to do sorting by different parameters.
 	$("#dropdownSort").empty();
 	if (sortorder==null){
 		var sortword = "Sort By";
@@ -411,26 +403,14 @@ function sortlist(sortorder){
 	GetBestSellerList(currentCategory);
 }
 
-
-function init() {
-	if (!store.enabled) {
-		alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
-		return
-	}
-	else{
-		alert('store.js is enabled!')
-		return
-	}
-	var items = new Store('list_name');
-	items.set('list_name', 24);
-}
-
 // var added_arr = []; // array to track if the book has been added to favourite or not
 function add_favo(arg){
 	var ele;
 	ele = "favo_icon" + arg;
 
 	var key;
+
+	// Adding favourite book into the store.js.
 
 	// console.log("1234");
 
@@ -528,6 +508,7 @@ function add_favo_from_remcommend(arg){
 
 function DisplayMyShelf()
 {
+	// Function to display the bookshelf.
 	var i = 0;
 
 	Books = [];
