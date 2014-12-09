@@ -133,6 +133,7 @@
                                 }else{
                                     $.plot($("#ranktrend"), [ {color: "#6c8dbb" ,data: [[1, curBook.rank], [2, curBook.rank]]} ], { xaxis: { max: 2, ticks: [[1, "Last"],[2, "Current"]] },yaxis: {transform: function (v) { return -v; },inverseTransform: function (v) { return -v; }} });
                                 }
+                                store.remove('book_detail');
                             </script>
 
                             </br>
