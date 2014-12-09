@@ -15,17 +15,19 @@ var pickeddate = null;
 function ShowRecommendation(){
 
 		$('#update').empty();
-		$('#changedate').empty();
+		$('#changedate').css("visibility","hidden");
 		$('#ListNameOnPage').empty();
 		$('#ListDescOnPage').empty();
+		$('#dropdownSort').css("visibility","hidden");
 			
 		//Empty case
-		if(Object.getOwnPropertyNames(FavoBooks).length==0){
+		if(Object.getOwnPropertyNames(FavoBooks).length==1){
 			console.log("hello world!");
 			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
 		}
 		else{
-
+			console.log("has recommended content!")
+			console.log(Object.getOwnPropertyNames(FavoBooks).length);
 			var i=0;
 			for(var listName in AllBooksInFavoListsDic){
 				var books=AllBooksInFavoListsDic[listName];
@@ -251,6 +253,7 @@ function InitialPage()
 	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
 	$("#commentwell").css("visibility","hidden");
+	$("#changedate").css("visibility","visible");
 	var date=pickeddate;
 
 	BestSellerListNames();
@@ -274,7 +277,7 @@ function GetBestSellerList(list_Name)
 	currentCategory = list_Name;
 
 	// var date = "2014-10-11";
-	var date = store.get('published_date');
+	var date = pickeddate;
 
 	var bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/";  
 	if(date!=null ){
