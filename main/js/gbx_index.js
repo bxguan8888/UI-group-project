@@ -15,9 +15,10 @@ var pickeddate = null;
 function ShowRecommendation(){
 
 		$('#update').empty();
-		$('#changedate').empty();
+		$('#changedate').css("visibility","hidden");
 		$('#ListNameOnPage').empty();
 		$('#ListDescOnPage').empty();
+		$('#dropdownSort').css("visibility","hidden");
 			
 		//Empty case
 		if(Object.getOwnPropertyNames(FavoBooks).length==1){
@@ -252,6 +253,7 @@ function InitialPage()
 	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
 	$("#commentwell").css("visibility","hidden");
+	$("#changedate").css("visibility","visible");
 	var date=pickeddate;
 
 	BestSellerListNames();
@@ -275,7 +277,7 @@ function GetBestSellerList(list_Name)
 	currentCategory = list_Name;
 
 	// var date = "2014-10-11";
-	var date = store.get('published_date');
+	var date = pickeddate;
 
 	var bestSeller_List = "http://api.nytimes.com/svc/books/v3/lists/";  
 	if(date!=null ){
