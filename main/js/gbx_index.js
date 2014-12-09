@@ -518,6 +518,7 @@ function DisplayMyShelf()
 	$('#ListNameOnPage').empty();
 	$('#ListNameOnPage').append("My BookShelf");
 	$('#ListDescOnPage').empty();
+	$('#changedate').css("visibility","hidden");
 	// $('#ListDescOnPage').append("Updated on "+book.published_date);
 	$('#update').empty();
 
