@@ -14,10 +14,17 @@ var pickeddate = null;
 
 function ShowRecommendation(){
 
-			$('#update').empty();
-			$('#ListNameOnPage').empty();
-			$('#ListDescOnPage').empty();
+		$('#update').empty();
+		$('#ListNameOnPage').empty();
+		$('#ListDescOnPage').empty();
 			
+		//Empty case
+		if(Object.getOwnPropertyNames(FavoBooks).length==0){
+
+
+		}
+		else{
+
 			var i=0;
 			for(var listName in AllBooksInFavoListsDic){
 				var books=AllBooksInFavoListsDic[listName];
@@ -81,6 +88,7 @@ function ShowRecommendation(){
 				i++;
 				}
 			}
+		}
 
 
 }
