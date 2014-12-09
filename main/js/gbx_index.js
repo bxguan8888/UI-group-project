@@ -20,6 +20,7 @@ function ShowRecommendation(){
 			
 		//Empty case
 		if(Object.getOwnPropertyNames(FavoBooks).length==0){
+			console.log("hello world!");
 			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
 		}
 		else{
@@ -248,7 +249,7 @@ function InitialPage()
 
 	// Not working yet!!!!!!!!!!!!!! //
 	$("#dropdownSort").css("visibility","hidden");
-
+	$("#commentwell").css("visibility","hidden");
 	var date=pickeddate;
 
 	BestSellerListNames();
@@ -267,6 +268,7 @@ function GetBestSellerList(list_Name)
 	// name returned has this field.
 	$("#dropdownSort").css("visibility","visible");
 	$("#changedate").css("visibility","hidden");
+	$("#commentwell").css("visibility","hidden");
 	sort_by = currentSortMethod;
 	currentCategory = list_Name;
 
@@ -405,7 +407,7 @@ function sortlist(sortorder){
 	GetBestSellerList(currentCategory);
 }
 
-function SearchBookReview(data)
+function SearchBookReview(isbn)
 {
 	// 'data' passed in could be 'isbn13', title or book name.
 
@@ -415,7 +417,7 @@ function SearchBookReview(data)
 	// var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&isbn="+data+"&api-key="+Book_api;
 	// // Search by ISBN
 
-	var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&title=REVIVAL&api-key="+Book_api;
+	var url = "http://api.nytimes.com/svc/books/v3/reviews.jsonp?callback=books&isbn13="+isbn+"&api-key="+Book_api;
 	// For testing
 
 	$.ajax({
