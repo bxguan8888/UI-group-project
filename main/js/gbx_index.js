@@ -287,43 +287,6 @@ function sortlist(sortorder){
 	GetBestSellerList(currentCategory);
 }
 
-function individualDetail(bookObject){
-	console.log(bookObject);
-	var imgUpdate = "<img src=\""+bookObject.book_image+"\" style=\"display:inline;margin:6px\" width=\"90%\"";
-	$("#detailImg").empty();
-	$("#detailImg").append(imgUpdate);
-	var titleUpdate = bookObject['title'];
-	$("#detail-title").empty();
-	$("#detail-title").append(titleUpdate);
-	var authorUpdate = bookObject.author;
-	$("#detail-author").empty();
-	$("#detail-author").append(authorUpdate);
-	var descUpdate = bookObject['description'];
-	$("#detail-desc").empty();
-	$("#detail-desc").append(descUpdate);
-	var publisherUpdt = bookObject.publisher;
-	$("#detail-publisher").empty();
-	$("#detail-publisher").append(publisherUpdt);
-	var IsbnUpdate = "ISBN: "+book.primary_isbn13;
-	$("#detail-isbn").empty();
-	$("#detail-isbn").append(IsbnUpdate);
-	var amazonlink = "";
-	splitLink = bookObject.amazon_product_url.split("\\");
-	for (i=0;i<splitLink.length;i++){
-		amazonlink += splitLink[i];
-	}
-	var amazonLinkUpdt = "<a href=\""+amazonlink+"\"><img src=\"images/Amazon-logo.png\" width=\"14%\"></a>";
-	$("#buy").empty();
-	$("#buy").append(amazonLinkUpdt);
-}
-
-// function overviewTolist(not_coded_listname){
-// 	lower_case = not_coded_listname.toLowerCase();
-// 	encoded_listname=lower_case.replace(/ /g, "-");
-// 	GetBestSellerList(encoded_listname);
-// }
-
-
 function SearchBookReview(data)
 {
 	// 'data' passed in could be 'isbn13', title or book name.
