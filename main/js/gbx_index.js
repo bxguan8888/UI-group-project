@@ -20,12 +20,13 @@ function ShowRecommendation(){
 		$('#ListDescOnPage').empty();
 			
 		//Empty case
-		if(Object.getOwnPropertyNames(FavoBooks).length==0){
+		if(Object.getOwnPropertyNames(FavoBooks).length==1){
 			console.log("hello world!");
 			$("#update").append("<div class=\"jumbotron\"><h2>No Recommendation Yet</h2><p>Add your favorite books to the shelf, we will recommend more for you! :)</p></div>");
 		}
 		else{
-
+			console.log("has recommended content!")
+			console.log(Object.getOwnPropertyNames(FavoBooks).length);
 			var i=0;
 			for(var listName in AllBooksInFavoListsDic){
 				var books=AllBooksInFavoListsDic[listName];
