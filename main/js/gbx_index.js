@@ -120,17 +120,29 @@ function BestSellerListsOverview(date)
 				if(store.get(key)==null){
 					//TODO add html	
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
 					//TODO add html
-					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-after.png)');
+					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
 
 				$('#update').append(addedHtml);
+
+				if(store.get(key)==null){
+					//TODO add html	
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+				}
+				else{
+					//TODO add html
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+				}
+
 			}
 		}
 	});
@@ -256,18 +268,30 @@ function GetBestSellerList(list_Name)
 				// this book is not in favo list
 				if(store.get(key)==null){
 					//TODO add html	
-
 					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-before.png)');			
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
 				}
 				else{
 					//TODO add html
-					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Add to My Shelf</p></div>";
-					var section_id="#favo_icon"+i;
-					$(section_id).css('background-image','url(../main/images/bookmark-before.png)');
+					addedHtml=addedHtml+ "<div class=\"add-favo\"><div class=\"favo-icon\" id=\"favo_icon"+i+"\" onClick=\"add_favo("+i+")\" title=\"favorite\" style=\"margin:6px;\"></div><p id=\"add"+i+"\" style=\"display:inline;float:left;margin-top:6px;color:#ad6f59\">Remove from My Shelf</p></div>";
+					// var section_id="favo_icon"+i;
+					// document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
 				}
+
 				$('#update').append(addedHtml);
+
+				if(store.get(key)==null){
+					//TODO add html	
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-before.png)";
+				}
+				else{
+					//TODO add html
+					var section_id="favo_icon"+i;
+					document.getElementById(section_id).style.backgroundImage = "url(../main/images/bookmark-after.png)";
+				}
+
 			}
 
 		}
